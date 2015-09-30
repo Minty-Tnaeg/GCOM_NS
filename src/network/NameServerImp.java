@@ -14,40 +14,31 @@ public class NameServerImp implements NameServerInterface {
 
     private HashMap<String, ComModuleImp> leaderList;
 
-
     public NameServerImp() {
         this.leaderList = new HashMap<>();
     }
 
     @Override
-    public void createGroup(String s, ComModuleImp leader) throws RemoteException {
-        if (this.leaderList.containsKey(s)) {
+    public void createGroup(String groupName, ComModuleImp leader) throws RemoteException {
+        if (this.leaderList.containsKey(groupName)) {
             throw new RemoteException("Group already exists");
         }
-
-        this.leaderList.put(s, leader);
-
-
-
+        this.leaderList.put(groupName, leader);
     }
 
     @Override
-    public ComModuleImp joinGroup(String s, ComModuleImp comModuleInterface) throws RemoteException {
-        return null;
+    public ComModuleImp joinGroup(String groupName) throws RemoteException {
+        return this.leaderList.get(groupName);
     }
 
     @Override
     public String[] groupList() throws RemoteException {
-        return new String[0];
+        String[] a = new String[1];
+        return this.leaderList.keySet().toArray(a);
     }
 
     @Override
-    public void assignNewLeader(String s, ComModuleImp comModuleImp) throws RemoteException {
-        this.leaderList.put(s, comModuleImp);
+    public void assignNewLeader(String groupName, ComModuleImp comModuleImp) throws RemoteException {
+        this.leaderList.put(groupName, comModuleImp);
     }
-
-
-
-
-
 }
