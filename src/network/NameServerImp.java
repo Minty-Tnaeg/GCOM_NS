@@ -7,6 +7,7 @@ import remote.objects.ComModuleImp;
 import java.rmi.RemoteException;
 
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by c10mjn on 2015-09-30.
@@ -14,29 +15,30 @@ import java.util.HashMap;
 public class NameServerImp implements NameServerInterface {
 
     private HashMap<String, ComModuleInterface> leaderList;
+    private HashMap<String, String> nameList;
 
     public NameServerImp() {
         this.leaderList = new HashMap<>();
+        this.nameList = new HashMap<>();
     }
 
     @Override
-    public void createGroup(String groupName, ComModuleInterface leader) throws RemoteException {
-
-        if (this.leaderList.containsKey(groupName)) {
-            throw new RemoteException("Group already exists");
+    public ComModuleInterface joinGroup(String groupName, ComModuleInterface leader) throws RemoteException {
+        if(!this.leaderList.containsKey(groupName)){
+            this.leaderList.put(groupName, leader);
         }
-        this.leaderList.put(groupName, leader);
-    }
-
-    @Override
-    public ComModuleInterface joinGroup(String groupName) throws RemoteException {
         return this.leaderList.get(groupName);
     }
 
     @Override
-    public String[] groupList() throws RemoteException {
-        String[] a = new String[1];
-        return this.leaderList.keySet().toArray(a);
+    public String[][] groupList() throws RemoteException {
+        String[][] groupList = new String[nameList.size()][2];
+        int i = 0;
+        for(Map.Entry e : this.nameList.entrySet()){
+            groupList[i][0] = (String) e.getKey();
+            groupList[i][1] = (String) e.getValue();
+        }
+        return groupList;
     }
 
     @Override
