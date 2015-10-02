@@ -1,5 +1,6 @@
 package network;
 
+import remote.interfaces.ComModuleInterface;
 import remote.interfaces.NameServerInterface;
 import remote.objects.ComModuleImp;
 
@@ -12,14 +13,15 @@ import java.util.HashMap;
  */
 public class NameServerImp implements NameServerInterface {
 
-    private HashMap<String, ComModuleImp> leaderList;
+    private HashMap<String, ComModuleInterface> leaderList;
 
     public NameServerImp() {
         this.leaderList = new HashMap<>();
     }
 
     @Override
-    public void createGroup(String groupName, ComModuleImp leader) throws RemoteException {
+    public void createGroup(String groupName, ComModuleInterface leader) throws RemoteException {
+
         if (this.leaderList.containsKey(groupName)) {
             throw new RemoteException("Group already exists");
         }
@@ -27,7 +29,7 @@ public class NameServerImp implements NameServerInterface {
     }
 
     @Override
-    public ComModuleImp joinGroup(String groupName) throws RemoteException {
+    public ComModuleInterface joinGroup(String groupName) throws RemoteException {
         return this.leaderList.get(groupName);
     }
 
@@ -38,7 +40,7 @@ public class NameServerImp implements NameServerInterface {
     }
 
     @Override
-    public void assignNewLeader(String groupName, ComModuleImp comModuleImp) throws RemoteException {
-        this.leaderList.put(groupName, comModuleImp);
+    public void assignNewLeader(String groupName, ComModuleInterface leader) throws RemoteException {
+        this.leaderList.put(groupName, leader);
     }
 }
