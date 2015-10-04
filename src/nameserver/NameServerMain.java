@@ -2,7 +2,9 @@ package nameserver;
 
 
 import network.NameServerImp;
+import remote.interfaces.ComModuleInterface;
 import remote.interfaces.NameServerInterface;
+import remote.objects.ComModuleImp;
 
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -25,7 +27,7 @@ public class NameServerMain {
 
 
         try {
-            NameServerImp ns = new NameServerImp();
+            NameServerImp<ComModuleImp> ns = new NameServerImp<>();
             NameServerInterface stub = (NameServerInterface) UnicastRemoteObject.exportObject(ns, 0);
             Registry reg = LocateRegistry.createRegistry(33400);
             reg.rebind(name, stub);
