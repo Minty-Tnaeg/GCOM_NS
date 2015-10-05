@@ -4,7 +4,6 @@ package nameserver;
 import network.NameServerImp;
 import remote.interfaces.ComModuleInterface;
 import remote.interfaces.NameServerInterface;
-import remote.objects.ComModuleImp;
 
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
