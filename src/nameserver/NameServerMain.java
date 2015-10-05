@@ -27,7 +27,7 @@ public class NameServerMain {
 
 
         try {
-            NameServerImp<ComModuleImp> ns = new NameServerImp<>();
+            NameServerImp<ComModuleInterface> ns = new NameServerImp<>();
             NameServerInterface stub = (NameServerInterface) UnicastRemoteObject.exportObject(ns, 0);
             Registry reg = LocateRegistry.createRegistry(33400);
             reg.rebind(name, stub);
