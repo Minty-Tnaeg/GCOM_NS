@@ -19,9 +19,6 @@ public class NameServerImp<T extends ComModuleInterface> implements NameServerIn
     public NameServerImp() {
         this.leaderList = new HashMap<>();
         this.nameList = new HashMap<>();
-
-
-
     }
 
     @Override

@@ -28,7 +28,7 @@ public class NameServerMain {
         try {
             NameServerImp<ComModuleInterface> ns = new NameServerImp<>();
             NameServerInterface stub = (NameServerInterface) UnicastRemoteObject.exportObject(ns, 0);
-            Registry reg = LocateRegistry.createRegistry(33400);
+            Registry reg = LocateRegistry.createRegistry(33401);
             reg.rebind(name, stub);
 
             System.err.println("NameServer started");
@@ -36,6 +36,5 @@ public class NameServerMain {
             e.printStackTrace();
             System.exit(-1);
         }
-
     }
 }
