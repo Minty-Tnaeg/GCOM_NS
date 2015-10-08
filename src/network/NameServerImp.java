@@ -44,16 +44,22 @@ public class NameServerImp<T extends ComModuleInterface> implements NameServerIn
 
     @Override
     public T assignNewLeader(String groupName, T leader) throws RemoteException {
-        if (!isAlive(this.leaderList.get(groupName))) {
-            this.leaderList.put(groupName, leader);
+        if (isAlive(leader)) {
+        //System.err.println("Take over attempt by: " + leader.getNickName());
+        //System.err.println("Leader at start: " + this.leaderList.get(groupName).getNickName());
+        this.leaderList.put(groupName, leader);
+        //System.err.println("Leader after check: " + this.leaderList.get(groupName).getNickName());
         }
-
         return this.leaderList.get(groupName);
     }
 
     private boolean isAlive(T comModule) throws RemoteException {
-        ComModuleInterface com = (ComModuleInterface) comModule;
-        return (Math.abs(System.currentTimeMillis() - com.ping()) <= 5000 );
+        Long time = System.currentTimeMillis();
+        Long pingTime = comModule.ping();
+        //System.err.println("Time. " + time);
+        //System.err.println("Ping: " + pingTime);
+        //System.err.println("Difference: " + (time-pingTime));
+        return (Math.abs(time - pingTime) <= 5000 );
 
 
     }
